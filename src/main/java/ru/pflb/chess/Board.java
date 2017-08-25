@@ -224,4 +224,8 @@ public class Board {
 
         sideToMove = sideToMove.getOpposite();
     }
+
+    public boolean isAttackedBy(Color sideToMove, Square square) {
+        throw new UnsupportedOperationException();
+    }
 }

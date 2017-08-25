@@ -8,15 +8,16 @@ import java.util.List;
 public class Search {
 
     public static int perft(Board board, int depth) {
-        List<Move> moves = new MoveGenerator(board).generateMoves();
-        if (depth == 1) {
-            return moves.size();
-            // TODO - исключить недопустимые ходы
+        if (depth == 0) {
+            return 1;
         }
+        List<Move> moves = new MoveGenerator(board).generateMoves();
         int positions = 0;
         for (Move move : moves) {
             board.doMove(move);
-            positions += perft(board, depth - 1);
+            if (!board.isAttackedBy(board.getSideToMove(), new Square(board.getKingPos(board.getSideToMove().getOpposite())))) {
+                positions += perft(board, depth - 1);
+            }
             board.undoMove(move);
         }
         return positions;
