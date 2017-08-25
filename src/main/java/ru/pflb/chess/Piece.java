@@ -96,7 +96,8 @@ public class Piece {
         }
     }
 
+    @Override
     public String toString() {
-        return code == -1 ? "OUT" : code == 0 ? "EMPTY" : getPieceType().name();
+        return code == -1 ? "X" : code == 0 ? "." : getColor() == WHITE ? getPieceType().name().substring(0,1) : getPieceType().name().substring(0,1).toLowerCase();
     }
 }
