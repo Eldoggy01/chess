@@ -1,7 +1,6 @@
 package ru.pflb.chess;
 
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.List;
@@ -17,12 +16,14 @@ import static ru.pflb.chess.Square.A8;
 public class SearchTest {
 
     @Test
-    @Ignore
+//    @Ignore
     public void perftTest() {
-        Board board = new Board("3kr3/Kr6/8/8/8/8/8/8 w - -");
-        int movesNb = Search.perft(board, 2);
+        long millis = System.currentTimeMillis();
+        Board board = new Board("k6K/8/8/8/8/8/8/8 w - -");
+        int movesNb = Search.perft(board, 10);
+        System.out.println(movesNb + " " + (System.currentTimeMillis() - millis));
 
-        assertThat(movesNb).isEqualTo(65);
+        assertThat(movesNb).isEqualTo(54);
     }
 
     @Test

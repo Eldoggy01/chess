@@ -61,8 +61,13 @@ public class Search {
             return new Entry(new Eval(board).getValue(), new ArrayList<>());
         }
         List<Move> moves = new MoveGenerator(board).generateMoves();
+        List<Move> pv = null;
         for (Move move : moves) {
             board.doMove(move);
+            if (board.isAttackedBy(board.getSideToMove(), new Square(board.getKingPos(board.getSideToMove().getOpposite())))) {
+                board.undoMove(move);
+                continue;
+            }
             Entry score = alphaBetaMin(board, alpha, beta, depthleft - 1);
             board.undoMove(move);
             if (score.compareTo(beta) >= 0) {
@@ -72,9 +77,10 @@ public class Search {
             if (score.compareTo(alpha) > 0) {
                 // alpha acts like max in MiniMax
                 alpha = score.value;
+                pv = score.pv;
             }
         }
-        return new Entry(alpha, new ArrayList<>());
+        return new Entry(alpha, pv == null ? new ArrayList<>() : pv);
     }
 
     private Entry alphaBetaMin(Board board, int alpha, int beta, int depthleft) {
@@ -82,8 +88,13 @@ public class Search {
             return new Entry(-new Eval(board).getValue(), new ArrayList<>());
         }
         List<Move> moves = new MoveGenerator(board).generateMoves();
+        List<Move> pv = null;
         for (Move move : moves) {
             board.doMove(move);
+            if (board.isAttackedBy(board.getSideToMove(), new Square(board.getKingPos(board.getSideToMove().getOpposite())))) {
+                board.undoMove(move);
+                continue;
+            }
             Entry score = alphaBetaMax(board, alpha, beta, depthleft - 1);
             board.undoMove(move);
             if (score.compareTo(alpha) <= 0) {
@@ -95,6 +106,6 @@ public class Search {
                 beta = score.value;
             }
         }
-        return new Entry(beta, new ArrayList<>());
+        return new Entry(beta, pv == null ? new ArrayList<>() : pv);
     }
 }

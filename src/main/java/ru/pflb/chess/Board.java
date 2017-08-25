@@ -8,6 +8,7 @@ import static ru.pflb.chess.Piece.EMP;
 import static ru.pflb.chess.Piece.OUT;
 import static ru.pflb.chess.PieceType.KING;
 import static ru.pflb.chess.PieceType.ROOK;
+import static ru.pflb.chess.Square.*;
 
 /**
  * @author <a href="mailto:8445322@gmail.com">Ivan Bonkin</a>.
@@ -227,5 +228,44 @@ public class Board {
 
     public boolean isAttackedBy(Color sideToMove, Square square) {
         throw new UnsupportedOperationException();
+    }
+
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder("\n");
+        for (int s = A8.getCode(); s >= H8.getCode(); s--) {
+            sb.append(mailbox120[s]).append(" ");
+        }
+        sb.append("\n");
+        for (int s = A7.getCode(); s >= H7.getCode(); s--) {
+            sb.append(mailbox120[s]).append(" ");
+        }
+        sb.append("\n");
+        for (int s = A6.getCode(); s >= H6.getCode(); s--) {
+            sb.append(mailbox120[s]).append(" ");
+        }
+        sb.append("\n");
+        for (int s = A5.getCode(); s >= H5.getCode(); s--) {
+            sb.append(mailbox120[s]).append(" ");
+        }
+        sb.append("\n");
+        for (int s = A4.getCode(); s >= H4.getCode(); s--) {
+            sb.append(mailbox120[s]).append(" ");
+        }
+        sb.append("\n");
+        for (int s = A3.getCode(); s >= H3.getCode(); s--) {
+            sb.append(mailbox120[s]).append(" ");
+        }
+        sb.append("\n");
+        for (int s = A2.getCode(); s >= H2.getCode(); s--) {
+            sb.append(mailbox120[s]).append(" ");
+        }
+        sb.append("\n");
+        for (int s = A1.getCode(); s >= H1.getCode(); s--) {
+            sb.append(mailbox120[s]).append(" ");
+        }
+
+        return sb.toString();
     }
 }
