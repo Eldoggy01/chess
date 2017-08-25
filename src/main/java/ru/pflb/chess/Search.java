@@ -1,10 +1,10 @@
 package ru.pflb.chess;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static java.lang.Integer.MAX_VALUE;
 import static java.lang.Integer.MIN_VALUE;
-import static java.util.Collections.emptyList;
 import static ru.pflb.chess.Color.WHITE;
 
 /**
@@ -58,7 +58,7 @@ public class Search {
 
     private Entry alphaBetaMax(Board board, int alpha, int beta, int depthleft) {
         if (depthleft == 0) {
-            return new Entry(new Eval(board).getValue(), emptyList());
+            return new Entry(new Eval(board).getValue(), new ArrayList<>());
         }
         List<Move> moves = new MoveGenerator(board).generateMoves();
         for (Move move : moves) {
@@ -74,12 +74,12 @@ public class Search {
                 alpha = score.value;
             }
         }
-        return new Entry(alpha, emptyList());
+        return new Entry(alpha, new ArrayList<>());
     }
 
     private Entry alphaBetaMin(Board board, int alpha, int beta, int depthleft) {
         if (depthleft == 0) {
-            return new Entry(-new Eval(board).getValue(), emptyList());
+            return new Entry(-new Eval(board).getValue(), new ArrayList<>());
         }
         List<Move> moves = new MoveGenerator(board).generateMoves();
         for (Move move : moves) {
@@ -95,6 +95,6 @@ public class Search {
                 beta = score.value;
             }
         }
-        return new Entry(beta, emptyList());
+        return new Entry(beta, new ArrayList<>());
     }
 }

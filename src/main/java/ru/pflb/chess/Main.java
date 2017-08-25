@@ -65,7 +65,7 @@ public class Main {
                             System.out.println("readyok");
                             break;
                         case "go":
-                            Move bestMove = Search.search(board);
+                            Move bestMove = Search.bestMoves(board).get(0);
                             LOGGER.debug("< {}", bestMove.getFrom().toString() + bestMove.getTo().toString());
                             System.out.println(bestMove.getFrom().toString() + bestMove.getTo().toString());
                     }
