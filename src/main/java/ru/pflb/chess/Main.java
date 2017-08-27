@@ -17,10 +17,8 @@ public class Main {
     private static final Logger LOGGER = LoggerFactory.getLogger(Main.class);
 
     public static void main(String[] args) {
-        Board board = new Board("K1k5/1R1b4/8/8/4Q3/8/5b2/8 w - -"); //Вроде сам
-        int movesNb = Search.perft(board, 2); //Вроде сам добавил
-        System.out.println(movesNb); // Вроде сам добавил
-        /*if (args.length >= 1) {
+    
+        if (args.length >= 1) {
             Board board = new Board(args[0].replaceAll("\"", ""));
             for (int d = 1; d <= 7; d++) {
                 long start = System.currentTimeMillis();
@@ -77,7 +75,7 @@ public class Main {
 
 
 
-        }*/
+        }
 
     }
 }
