@@ -41,7 +41,7 @@ public class Search {
         int positions = 0;
         for (Move move : moves) {
             board.doMove(move);
-            if (!board.isAttackedBy(board.getSideToMove(), new Square(board.getKingPos(board.getSideToMove().getOpposite())))) {
+            if (!board.isCheck(board.getSideToMove().getOpposite())) {
                 positions += perft(board, depth - 1);
             }
             board.undoMove(move);
@@ -64,7 +64,7 @@ public class Search {
         List<Move> pv = null;
         for (Move move : moves) {
             board.doMove(move);
-            if (board.isAttackedBy(board.getSideToMove(), new Square(board.getKingPos(board.getSideToMove().getOpposite())))) {
+            if (board.isCheck(board.getSideToMove().getOpposite())) {
                 board.undoMove(move);
                 continue;
             }
@@ -91,7 +91,7 @@ public class Search {
         List<Move> pv = null;
         for (Move move : moves) {
             board.doMove(move);
-            if (board.isAttackedBy(board.getSideToMove(), new Square(board.getKingPos(board.getSideToMove().getOpposite())))) {
+            if (board.isCheck(board.getSideToMove().getOpposite())){
                 board.undoMove(move);
                 continue;
             }

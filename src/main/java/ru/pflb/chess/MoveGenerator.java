@@ -5,8 +5,7 @@ import java.util.List;
 
 import static ru.pflb.chess.Color.WHITE;
 import static ru.pflb.chess.Piece.*;
-import static ru.pflb.chess.PieceType.KING;
-import static ru.pflb.chess.PieceType.ROOK;
+import static ru.pflb.chess.PieceType.*;
 
 /**
  * @author <a href="mailto:8445322@gmail.com">Ivan Bonkin</a>.
@@ -21,10 +20,10 @@ public class MoveGenerator {
 
     public List<Move> generateMoves() {
         List<Move> moves = new ArrayList<Move>();
-
+        moves.addAll(generateQueenMoves());
         moves.addAll(generateKingMoves());
         moves.addAll(generateRookMoves());
-
+        moves.addAll(generateBishopMoves());
         return moves;
     }
 
@@ -34,16 +33,18 @@ public class MoveGenerator {
         List<Move> moves = new ArrayList<Move>();
         for (int i = 0; i < offsets.length; i++) {
             int newPos = kingPos + offsets[i];
-
+            int a = Math.abs(board.getKingPos(board.getSideToMove().getOpposite())-newPos);
+            if(a ==9|| a==1 || a==10||a==11)
+                continue;
             Piece piece = board.getPiece(newPos);
             if (piece.isEmpty()) {
                 moves.add(new Move(new Square(kingPos), new Square(newPos), board.getSideToMove() == WHITE ? W_KING : B_KING));
             } else if (piece.isEnemy(board.getSideToMove())) {
-                moves.add(new Move(new Square(kingPos), new Square(newPos), board.getSideToMove() == WHITE ? W_KING : B_KING, piece));
+                moves.add(new Move(new Square(kingPos), new Square(newPos), board.getSideToMove() == WHITE ? W_KING : B_KING,
+                        piece));
             } else {
-                // не можем ходить:
-                // либо своя фигура
-                // либо ход за пределы доски
+// не можем ходить:
+// либо ход за пределы доски
             }
         }
 
@@ -57,22 +58,75 @@ public class MoveGenerator {
             int[] offsets = board.getOffsets(ROOK);
 
             for (int i = 0; i < offsets.length; i++) {
-                for (int newPos = rookPos + offsets[i]; ; newPos += offsets[i]) {
+                for (int newPos = rookPos + offsets[i]; offsets[i]!=0 ; newPos += offsets[i]) {
                     Piece piece = board.getPiece(newPos);
                     if (piece.isEmpty()) {
                         moves.add(new Move(new Square(rookPos), new Square(newPos), board.getSideToMove() == WHITE ? W_ROOK : B_ROOK));
                     } else if (piece.isEnemy(board.getSideToMove())) {
                         moves.add(new Move(new Square(rookPos), new Square(newPos), board.getSideToMove() == WHITE ? W_ROOK : B_ROOK, piece));
+                        break;
                     } else {
-                        // не можем ходить:
-                        // либо своя фигура
-                        // либо ход за пределы доски
+// не можем ходить:
+// либо своя фигура
+// либо ход за пределы доски
                         break;
                     }
                 }
             }
         }
 
+        return moves;
+    }
+    public List<Move> generateBishopMoves() {
+        List<Move> moves = new ArrayList<Move>();
+        for (int r = 0; r < board.getBishopsNb(board.getSideToMove()); r++) {
+            int g= board.getBishopsNb(board.getSideToMove());
+            int bishopPos = board.getBishopPos(board.getSideToMove(), r);
+            int[] offsets = board.getOffsets(BISHOP);
+
+            for (int i = 0; i < offsets.length; i++) {
+                for (int newPos = bishopPos + offsets[i];offsets[i]!=0 ; newPos += offsets[i]) {
+                    Piece piece = board.getPiece(newPos);
+                    if (piece.isEmpty()) {
+                        moves.add(new Move(new Square(bishopPos), new Square(newPos), board.getSideToMove() == WHITE ? W_BISHOP : B_BISHOP));
+                    } else if (piece.isEnemy(board.getSideToMove())) {
+                        moves.add(new Move(new Square(bishopPos), new Square(newPos), board.getSideToMove() == WHITE ? W_BISHOP : B_BISHOP, piece));
+                        break;
+                    } else {
+// не можем ходить:
+// либо своя фигура
+// либо ход за пределы доски
+                        break;
+                    }
+                }
+            }
+        }
+
+        return moves;
+    }
+    public List<Move> generateQueenMoves() {
+        List<Move> moves = new ArrayList<Move>();
+        for (int r = 0; r < board.getQueensNb(board.getSideToMove()); r++) {
+            int queenPos = board.getQueenPos(board.getSideToMove(), r);
+            int[] offsets = board.getOffsets(QUEEN);
+
+            for (int i = 0; i < offsets.length; i++) {
+                for (int newPos = queenPos + offsets[i]; offsets[i]!=0; newPos += offsets[i]) {
+                    Piece piece = board.getPiece(newPos);
+                    if (piece.isEmpty()) {
+                        moves.add(new Move(new Square(queenPos), new Square(newPos), board.getSideToMove() == WHITE ? W_QUEEN : B_QUEEN));
+                    } else if (piece.isEnemy(board.getSideToMove())) {
+                        moves.add(new Move(new Square(queenPos), new Square(newPos), board.getSideToMove() == WHITE ? W_QUEEN : B_QUEEN, piece));
+                        break;
+                    } else {
+// не можем ходить:
+// либо своя фигура
+// либо ход за пределы доски
+                        break;
+                    }
+                }
+            }
+        }
 
         return moves;
     }
