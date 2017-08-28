@@ -39,12 +39,14 @@ public class Search {
         }
         List<Move> moves = new MoveGenerator(board).generateMoves();
         int positions = 0;
-        for (Move move : moves) {
+
+        for (Move move: moves) {
             board.doMove(move);
             if (!board.isCheck(board.getSideToMove().getOpposite())) {
-                positions += perft(board, depth - 1);
-            }
+            positions += perft(board, depth-1); }
             board.undoMove(move);
+
+
         }
         return positions;
     }
